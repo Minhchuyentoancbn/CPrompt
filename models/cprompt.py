@@ -33,6 +33,7 @@ class CPrompt(BaseLearner):
         self._device = args['device'][0]
         self.dataset_name=args["dataset"]
         self.args["num_classes"] = dataset_classes.get(self.dataset_name, 0) 
+        print("num_classes:",self.args["num_classes"])
         self._network=CPrompt_Net(self.args)
         self.acc=[]
         self.faa_accuracy_table=[]
