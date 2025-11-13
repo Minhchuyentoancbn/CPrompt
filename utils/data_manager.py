@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from utils.data import iCIFAR100_vit, iImageNetR, iDomainnetCIL,iStanford_cars
+from utils.data import iCIFAR100_vit, iImageNetR, iDomainnetCIL,iStanford_cars, CUB
 
 class DataManager(object):
     def __init__(self, dataset_name, shuffle, seed, init_cls, increment, args=None):
@@ -213,6 +213,8 @@ def _get_idata(dataset_name, args=None):
     
     elif name=="stanfordcars":
         return iStanford_cars()
+    elif name=="cub":
+        return CUB()
     else:
         raise NotImplementedError('Unknown dataset {}.'.format(dataset_name))
 
