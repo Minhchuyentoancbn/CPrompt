@@ -5,6 +5,17 @@ from utils.toolkit import split_images_labels
 from PIL import Image
 import torch
 
+
+def build_transform(is_train, args):
+    input_size = 224
+    t=[  
+        transforms.Resize((224,224),transforms.InterpolationMode.BICUBIC),
+        transforms.CenterCrop(size=(224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.48145466, 0.4578275, 0.40821073), std=(0.26862954, 0.26130258, 0.27577711))
+    ]
+    return t
+
 class iData(object):
     train_trsf = []
     test_trsf = []
@@ -108,6 +119,29 @@ class iImageNetR(iData):
         self.train_targets = train_labels
         self.test_data = test_images
         self.test_targets = test_labels
+
+
+class CUB(iData):
+    use_path = True
+    
+    train_trsf=build_transform(True, None)
+    test_trsf=build_transform(False, None)
+    common_trsf = [    ]
+
+    class_order = np.arange(200).tolist()
+
+    def download_data(self):
+        # assert 0, "You should specify the folder of your dataset"
+        train_dir = "./data/cub/train/"
+        test_dir = "./data/cub/test/"
+
+        train_dset = datasets.ImageFolder(train_dir)
+        test_dset = datasets.ImageFolder(test_dir)
+
+        print(train_dset.class_to_idx)
+
+        self.train_data, self.train_targets = split_images_labels(train_dset.imgs)
+        self.test_data, self.test_targets = split_images_labels(test_dset.imgs)
         
 
 class iCIFAR100_vit(iData):
