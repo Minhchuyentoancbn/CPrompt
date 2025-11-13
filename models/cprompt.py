@@ -20,7 +20,8 @@ dataset_classes = {
     "cifar100_vit": 100,
     "domainnet": 200,
     "imagenetr": 200,
-    "stanfordcars":196
+    "stanfordcars":196,
+    "cub":200
 }
 
 class CPrompt(BaseLearner):
